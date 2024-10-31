@@ -1,14 +1,16 @@
-let server_base_url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?api_key=DEMO_KEY";
 let imagen = document.getElementById("foto");
 let p_id = document.getElementById("id_imagen");
 let p_martian = document.getElementById("martian");
 let p_fecha = document.getElementById("fecha");
-let date = document.getElementById("input_fecha").value;
 let page = 1;
 let data;
 
-function verMas(id) {
-    establecerDetalles(id);
+document.getElementById("input_fecha").value = "2015-07-02";
+let date = document.getElementById("input_fecha").value;
+
+function obtenerFecha() {
+    date = document.getElementById("input_fecha").value;
+    return date;
 }
 
 function establecerDetalles(id) {
@@ -42,7 +44,7 @@ function generarInfo() {
                     <td>${foto.id}</td>
                     <td>${foto.rover.name}</td>
                     <td>${foto.camera.name}</td>
-                    <td><input id="${i++}" type="submit" value="More" onclick="verMas(this.id)"</td>
+                    <td><input id="${i++}" type="submit" value="More" onclick="establecerDetalles(this.id)"</td>
                 </tr>
         `;
         tableBody.innerHTML = rows;
@@ -50,13 +52,20 @@ function generarInfo() {
 }
 
 function siguientePagina() {
+    document.getElementById("btn_anterior").disabled = false;
     sumPage();
     obtenerInfo(date, page);
 }
 
 function anteriorPagina() {
-    restarPage();
-    obtenerInfo(date, page);
+    if (page == 2) {
+        document.getElementById("btn_anterior").disabled = true;
+        restarPage();
+        obtenerInfo(date, page);
+    } else {
+        restarPage();
+        obtenerInfo(date, page);
+    }
 }
 
 function sumPage() {
@@ -73,6 +82,14 @@ async function obtenerInfo(fecha, numPagina) {
     generarInfo();
 }
 
+async function buscarInfo() {
+    await obtenerInfo(obtenerFecha(), 1);
+    console.log(data.photos.length);
+    if (data.photos.length < 25) {
+        document.getElementById("btn_siguiente").disabled = true;
+    }
+}
+
 window.onload = function() {
-    obtenerInfo(date, page);
+    obtenerInfo("2015-07-02", 1);
 }
