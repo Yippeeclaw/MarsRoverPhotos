@@ -14,13 +14,13 @@
                 <label for="fecha">Earth Date:</label>
                 <input type="date" name="fecha" id="input_fecha" value="2015-07-02">
             </form>
-            <input type="submit" value="Find" onclick="generarInfo()">
+            <input type="submit" value="Find" onclick="buscarInfo()">
             <table id="tablaInfo">
                 <thead></thead>
                 <tbody></tbody>
             </table>
-            <input disabled type="submit" value="Anterior" onclick="anteriorPagina()">
-            <input type="submit" value="Siguiente" onclick="siguientePagina()">
+            <input id="btn_anterior" disabled type="submit" value="Anterior" onclick="anteriorPagina()">
+            <input id="btn_siguiente" type="submit" value="Siguiente" onclick="siguientePagina()">
         </div>
         <div id="right">
             <h1>Photo Detail</h1>
