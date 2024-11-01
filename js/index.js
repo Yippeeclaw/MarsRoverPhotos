@@ -83,6 +83,8 @@ async function obtenerInfo(fecha, numPagina) {
 }
 
 async function buscarInfo() {
+    document.getElementById("btn_anterior").disabled = true;
+    page = 1;
     await obtenerInfo(obtenerFecha(), 1);
     console.log(data.photos.length);
     if (data.photos.length < 25) {
